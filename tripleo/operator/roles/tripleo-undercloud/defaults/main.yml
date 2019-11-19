@@ -1,0 +1,18 @@
+---
+# defaults file for tripleo-undercloud
+tripleo_undercloud_backup_add_path: []
+tripleo_undercloud_backup_exclude_path: []
+tripleo_undercloud_debug: False
+tripleo_undercloud_home_dir: "{{ ansible_env.HOME }}"
+tripleo_undercloud_install_dry_run: False
+tripleo_undercloud_install_force_stack_update: False
+tripleo_undercloud_install_inflight_validations: False
+tripleo_undercloud_install_no_validations: False
+tripleo_undercloud_install_yes: False
+tripleo_undercloud_log_combine: True
+tripleo_undercloud_log_output: True
+tripleo_undercloud_upgrade_dry_run: False
+tripleo_undercloud_upgrade_force_stack_update: False
+tripleo_undercloud_upgrade_inflight_validations: False
+tripleo_undercloud_upgrade_no_validations: False
+tripleo_undercloud_upgrade_yes: False

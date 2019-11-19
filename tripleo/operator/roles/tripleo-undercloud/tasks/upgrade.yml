@@ -1,0 +1,21 @@
+- name: Setup undercloud upgrade facts
+  set_fact:
+    _tripleo_undercloud_upgrade_log_location: "{{ tripleo_undercloud_home_dir }}/undercloud_upgrade.log"
+    _tripleo_undercloud_upgrade: >-
+      openstack undercloud upgrade
+      {{ "--force-stack-update" | shell_arg_enabled(enabled=tripleo_undercloud_upgrade_force_stack_update) }}
+      {{ "--no-validations" | shell_arg_enabled(enabled=tripleo_undercloud_upgrade_no_validations) }}
+      {{ "--inflight-validations" | shell_arg_enabled(enabled=tripleo_undercloud_upgrade_inflight_validations) }}
+      {{ "--dry-run" | shell_arg_enabled(enabled=tripleo_undercloud_upgrade_dry_run) }}
+      {{ "--yes" | shell_arg_enabled(enabled=tripleo_undercloud_upgrade_yes) }}
+      {{ _tripleo_undercloud_upgrade_log_location | shell_logging_path(combine=tripleo_undercloud_log_combine, enabled=tripleo_undercloud_log_output) }}
+
+- name: Running the underclound upgrade command
+  debug:
+    var: _tripleo_undercloud_upgrade
+  when: tripleo_undercloud_debug|bool
+
+- name: undercloud upgrade
+  shell: "{{ _tripleo_undercloud_upgrade }}"
+  args:
+    chdir: "{{ tripleo_undercloud_home_dir }}"

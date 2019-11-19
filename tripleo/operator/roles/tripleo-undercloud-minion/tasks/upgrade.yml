@@ -1,0 +1,20 @@
+- name: Setup undercloud minion upgrade facts
+  set_fact:
+    _tripleo_undercloud_minion_upgrade_log_location: "{{ tripleo_undercloud_home_dir }}/undercloud_minion_upgrade.log"
+    _tripleo_undercloud_minion_upgrade: >-
+      openstack undercloud minion upgrade
+      {{ "--force-stack-update" | shell_arg_enabled(enabled=tripleo_undercloud_minion_upgrade_force_stack_update) }}
+      {{ "--no-validations" | shell_arg_enabled(enabled=tripleo_undercloud_minion_upgrade_no_validations) }}
+      {{ "--dry-run" | shell_arg_enabled(enabled=tripleo_undercloud_minion_upgrade_dry_run) }}
+      {{ "--yes" | shell_arg_enabled(enabled=tripleo_undercloud_minion_upgrade_yes) }}
+      {{ _tripleo_undercloud_minion_upgrade_log_location | shell_logging_path(combine=tripleo_undercloud_minion_log_combine, enabled=tripleo_undercloud_minion_log_output) }}
+
+- name: Running the underclound minion upgrade command
+  debug:
+    var: _tripleo_undercloud_minion_upgrade
+  when: tripleo_undercloud_debug|bool
+
+- name: undercloud minion upgrade
+  shell: "{{ _tripleo_undercloud_minion_upgrade }}"
+  args:
+    chdir: "{{ tripleo_undercloud_minion_home_dir }}"

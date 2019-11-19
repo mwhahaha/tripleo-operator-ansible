@@ -1,0 +1,18 @@
+- name: Setup undercloud backup facts
+  set_fact:
+    _tripleo_undercloud_backup_log_location: "{{ tripleo_undercloud_home_dir }}/undercloud_backup.log"
+    _tripleo_undercloud_backup: >-
+      openstack undercloud backup
+      {{ tripleo_undercloud_backup_add_path | shell_arg_list(parameter='--add-path') }}
+      {{ tripleo_undercloud_backup_exclude_path | shell_arg_list(parameter='--exclude-path') }}
+      {{ _tripleo_undercloud_backup_log_location | shell_logging_path(combine=tripleo_undercloud_log_combine, enabled=tripleo_undercloud_log_output) }}
+
+- name: Running the underclound backup command
+  debug:
+    var: _tripleo_undercloud_backup
+  when: tripleo_undercloud_debug|bool
+
+- name: undercloud backup
+  shell: "{{ _tripleo_undercloud_backup }}"
+  args:
+    chdir: "{{ tripleo_undercloud_home_dir }}"
