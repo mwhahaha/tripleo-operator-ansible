@@ -65,7 +65,7 @@ dest:
     description: Path to the new file
     returned: if changed
     type: str
-    sample: "/tmp/file.log.2017-07-27T16:39:00Z"
+    sample: "/tmp/file.log.2017-07-27_16:39:00"
 """
 
 import json
@@ -81,15 +81,15 @@ class ActionModule(ActionBase):
         missing = []
         args = {}
 
-        for option, vals in options:
+        for option, vals in options.items():
             if 'default' not in vals and not self._task.args.get(option, None):
                 missing.add(option)
                 continue
             args[option] = self._task.args.get(option, vals['default'])
 
         if missing:
-            raise Exception('Missing required parameters: %s',
-                            ', '.join(missing))
+            raise Exception('Missing required parameters: {}'.format(
+                            ', '.join(missing)))
         return args
 
     def run(self, tmp=None, task_vars=None):
@@ -102,7 +102,7 @@ class ActionModule(ActionBase):
             args = self._get_args()
         except Exception as e:
             result['failed'] = True
-            result['msg'] = "Action failed: %s".format(e)
+            result['msg'] = "Action failed: {}".format(e)
             return self._ensure_invocation(result)
 
         changed = False
@@ -115,7 +115,7 @@ class ActionModule(ActionBase):
             task_vars=task_vars
         )
         timestamp = datetime.now().strftime(args['date_format'])
-        dest_path = '.'join([src_path, timestamp])
+        dest_path = '.'.join([src_path, timestamp])
         if file_stat.get('stat', {}).get('exists', False) is False:
             # file doesn't exist so we're done
             result.merge(dict(skipped=True))
