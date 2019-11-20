@@ -87,11 +87,10 @@ class ActionModule(ActionBase):
     _VALID_ARGS = yaml.safe_load(DOCUMENTATION)['options']
 
     def _get_args(self):
-        options = self._VALID_ARGS
         missing = []
         args = {}
 
-        for option, vals in options.items():
+        for option, vals in self._VALID_ARGS.items():
             if 'default' not in vals:
                 if self._task.args.get(option, None) is None:
                     missing.append(option)
