@@ -18,6 +18,15 @@
 from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
+from ansible.errors import AnsibleActionFail
+from ansible.errors import AnsibleActionSkip
+from ansible.module_utils.parsing.convert_bool import boolean
+from ansible.plugins.action import ActionBase
+from datetime import datetime
+
+import json
+import yaml
+
 ANSIBLE_METADATA = {
     'metadata_version': '1.1',
     'status': ['preview'],
@@ -72,14 +81,6 @@ dest:
     type: str
     sample: "/tmp/file.log.2017-07-27_16:39:00"
 """
-
-import json
-import yaml
-
-from ansible.errors import AnsibleActionFail
-from ansible.errors import AnsibleActionSkip
-from ansible.plugins.action import ActionBase
-from datetime import datetime
 
 
 class ActionModule(ActionBase):
@@ -148,7 +149,7 @@ class ActionModule(ActionBase):
             return copy_result
         changed = True
 
-        if bool(args['remove']) is True:
+        if boolean(args.get('remove', False), strict=False):
             # cleanup original file as requested
             file_result = self._execute_module(
                 module_name='file',
