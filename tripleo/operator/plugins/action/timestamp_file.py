@@ -156,6 +156,9 @@ class ActionModule(ActionBase):
                 module_args=dict(path=src_path, state='absent'),
                 task_vars=task_vars
             )
+            if file_result.get('failed', False):
+               return file_result
+
 
         result['dest'] = copy_result['dest']
         result['changed'] = changed
