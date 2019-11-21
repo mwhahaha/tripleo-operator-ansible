@@ -7,6 +7,10 @@
       {{ tripleo_undercloud_backup_exclude_path | shell_arg_list(parameter='--exclude-path') }}
       {{ _tripleo_undercloud_backup_log_location | shell_logging_path(combine=tripleo_undercloud_log_combine, enabled=tripleo_undercloud_log_output) }}
 
+- name: Preserve existing log file if exists
+  timestamp_file:
+    path: "{{ _tripleo_undercloud_backup_log_location }}"
+
 - name: Running the underclound backup command
   debug:
     var: _tripleo_undercloud_backup
