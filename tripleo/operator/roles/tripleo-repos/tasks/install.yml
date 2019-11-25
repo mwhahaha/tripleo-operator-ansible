@@ -1,0 +1,27 @@
+---
+- name: Check if tripleo-repos is installed
+
+- name: Build RDO repo url
+  set_fact:
+    _tripleo_repos_repo_url: "{{ tripleo_repos_repo_base }}/{{ (ansible_facts.ansible_distribution == 'RedHat') | ternary('rhel', 'centos') }}-{{ ansible_facts.distribution_major_version }}/current/"
+
+- name: Find available tripleo-repos rpm
+  block:
+    - name: Grab repo package list
+      command: curl -s "{{ _tripleo_repos_repo_url }}"
+      retries: 10
+      delay: 3
+      register: _tripleo_repos_repo_data
+    - name: Find rpm name
+      set_fact:
+        _tripleo_repos_rpm: "{{ repo_data.stdout | regex_search('python[0-9]-tripleo-repos-[a-z0-9-.]+\\.rpm') }}"
+    - name: Fail if rpm is missing
+      fail:
+        msg: Unable to find tripleo-repos rpm
+      when: _tripleo_repos_rpm|length == 0
+
+- name: Install tripleo-repos
+  yum:
+    name: "{{ _tripleo_repos_rpm }}"
+    state: present
+  become: true
