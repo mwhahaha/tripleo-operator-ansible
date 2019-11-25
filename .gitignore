@@ -1,0 +1,4 @@
+.tox
+__pycache__
+build
+tripleo_operator_ansible.egg-info/

@@ -1,15 +1,16 @@
+---
 - name: Setup undercloud install facts
   set_fact:
-    _tripleo_undercloud_config_location: "{{ tripleo_undercloud_home_dir }}/undercloud.conf"
+    _config_location: "{{ tripleo_undercloud_home_dir }}/undercloud.conf"
 
 - name: Updating configuration with options
   debug:
-    var: _tripleo_undercloud_config_values
+    var: tripleo_undercloud_config_values
   when: tripleo_undercloud_debug|bool
 
 - name: Update undercloud.conf
   tripleo_undercloud_conf:
-    path: "{{ _tripleo_undercloud_config_location }}"
+    path: "{{ _config_location }}"
     values: "{{ tripleo_undercloud_config_values }}"
     sample_path: "{{ tripleo_undercloud_config_sample_path }}"
     use_sample: "{{ tripleo_undercloud_config_use_sample }}"

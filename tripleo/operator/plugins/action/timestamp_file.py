@@ -134,8 +134,8 @@ class ActionModule(ActionBase):
             module_args=dict(path=dest_path),
             task_vars=task_vars
         )
-        if (not args['force'] and
-                file_stat.get('stat', {}).get('exists', False) is True):
+        if (not args['force']
+                and file_stat.get('stat', {}).get('exists', False) is True):
             raise AnsibleActionFail("Destination file {} exists. Use force "
                                     "option to proceed.".format(dest_path))
 
@@ -157,8 +157,7 @@ class ActionModule(ActionBase):
                 task_vars=task_vars
             )
             if file_result.get('failed', False):
-               return file_result
-
+                return file_result
 
         result['dest'] = copy_result['dest']
         result['changed'] = changed

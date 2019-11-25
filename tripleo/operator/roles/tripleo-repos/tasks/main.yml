@@ -1,3 +1,4 @@
+---
 # tasks file for tripleo-repos
 - name: Gather distribution facts
   setup:
@@ -7,7 +8,7 @@
   package_facts:
 
 - name: Install tripleo-repos
-  include_tasks: install
+  include_tasks: install.yml
   when: (ansible_facts.distribution_major_version|int <= 7 and not 'python2-tripleo-repos' in ansible_facts.packages) or
         (ansible_facts.distribution_major_version|int <= 8 and not 'python3-tripleo-repos' in ansible_facts.packages)
 

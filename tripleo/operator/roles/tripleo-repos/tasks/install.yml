@@ -1,9 +1,10 @@
 ---
-- name: Check if tripleo-repos is installed
-
 - name: Build RDO repo url
   set_fact:
-    _tripleo_repos_repo_url: "{{ tripleo_repos_repo_base }}/{{ (ansible_facts.ansible_distribution == 'RedHat') | ternary('rhel', 'centos') }}-{{ ansible_facts.distribution_major_version }}/current/"
+    _tripleo_repos_repo_url: >-
+        {{ tripleo_repos_repo_base }}/
+        {{ (ansible_facts.ansible_distribution == 'RedHat') | ternary('rhel', 'centos') }}-{{ ansible_facts.distribution_major_version }}/
+        current/
 
 - name: Find available tripleo-repos rpm
   block:

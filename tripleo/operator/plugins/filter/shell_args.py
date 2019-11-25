@@ -14,6 +14,7 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
+
 class FilterModule(object):
     def filters(self):
         return {
@@ -45,6 +46,3 @@ class FilterModule(object):
         if combine:
             output = "%s %s".format(output, '2>&1')
         return "%s >%s".format(output, location)
-
-
-

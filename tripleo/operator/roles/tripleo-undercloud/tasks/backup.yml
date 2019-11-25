@@ -1,22 +1,23 @@
+---
 - name: Setup undercloud backup facts
   set_fact:
-    _tripleo_undercloud_backup_log_location: "{{ tripleo_undercloud_home_dir }}/undercloud_backup.log"
-    _tripleo_undercloud_backup: >-
+    _log_location: "{{ tripleo_undercloud_home_dir }}/undercloud_backup.log"
+    _backup_cmd: >-
       openstack undercloud backup
       {{ tripleo_undercloud_backup_add_path | shell_arg_list(parameter='--add-path') }}
       {{ tripleo_undercloud_backup_exclude_path | shell_arg_list(parameter='--exclude-path') }}
-      {{ _tripleo_undercloud_backup_log_location | shell_logging_path(combine=tripleo_undercloud_log_combine, enabled=tripleo_undercloud_log_output) }}
+      {{ _log_location | shell_logging_path(combine=tripleo_undercloud_log_combine, enabled=tripleo_undercloud_log_output) }}
 
 - name: Preserve existing log file if exists
   timestamp_file:
-    path: "{{ _tripleo_undercloud_backup_log_location }}"
+    path: "{{ _log_location }}"
 
 - name: Running the underclound backup command
   debug:
-    var: _tripleo_undercloud_backup
+    var: _backup_cmd
   when: tripleo_undercloud_debug|bool
 
 - name: undercloud backup
-  shell: "{{ _tripleo_undercloud_backup }}"
+  shell: "{{ _backup_cmd }}"
   args:
     chdir: "{{ tripleo_undercloud_home_dir }}"
