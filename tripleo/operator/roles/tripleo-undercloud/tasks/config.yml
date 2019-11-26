@@ -1,4 +1,8 @@
 ---
+- name: Gather environment facts
+  setup:
+    gather_subset: "!all,min"
+
 - name: Setup undercloud install facts
   set_fact:
     _config_location: "{{ tripleo_undercloud_home_dir }}/undercloud.conf"

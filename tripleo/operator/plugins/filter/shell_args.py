@@ -34,7 +34,7 @@ class FilterModule(object):
         return_value = []
         for a in arg:
             if parameter:
-                return_value.append("%s %s".format(parameter, a))
+                return_value.append("{} {}".format(parameter, a))
             else:
                 return_value.append(a)
         return ' '.join(return_value)
@@ -44,5 +44,5 @@ class FilterModule(object):
         if not enabled:
             return output
         if combine:
-            output = "%s %s".format(output, '2>&1')
-        return "%s >%s".format(output, location)
+            output = "{} {}".format(output, '2>&1')
+        return "{} >{}".format(output, location)

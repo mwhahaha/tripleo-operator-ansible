@@ -12,7 +12,7 @@
   timestamp_file:
     path: "{{ _log_location }}"
 
-- name: Running the underclound backup command
+- name: Show the underclound backup command
   debug:
     var: _backup_cmd
   when: tripleo_undercloud_debug|bool
