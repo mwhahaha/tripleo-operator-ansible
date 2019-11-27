@@ -105,6 +105,9 @@ class ActionModule(ActionBase):
                             ', '.join(missing)))
         return args
 
+    def _get_date_string(self, date_format):
+        return datetime.now().strftime(date_format)
+
     def run(self, tmp=None, task_vars=None):
         if task_vars is None:
             task_vars = dict()
@@ -122,7 +125,7 @@ class ActionModule(ActionBase):
             module_args=dict(path=src_path),
             task_vars=task_vars
         )
-        timestamp = datetime.now().strftime(args['date_format'])
+        timestamp = self._get_date_string(args['date_format'])
         dest_path = '.'.join([src_path, timestamp])
         if file_stat.get('stat', {}).get('exists', False) is False:
             # file doesn't exist so we're done
