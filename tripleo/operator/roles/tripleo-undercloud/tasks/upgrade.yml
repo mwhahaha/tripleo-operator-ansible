@@ -23,3 +23,5 @@
   shell: "{{ _upgrade_cmd }}"
   args:
     chdir: "{{ tripleo_undercloud_home_dir }}"
+  async: "{{ tripleo_undercloud_upgrade_timeout }}"
+  poll: 10

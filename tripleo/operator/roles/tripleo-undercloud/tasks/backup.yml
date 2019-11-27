@@ -20,3 +20,5 @@
   shell: "{{ _backup_cmd }}"
   args:
     chdir: "{{ tripleo_undercloud_home_dir }}"
+  async: "{{ tripleo_undercloud_backup_timeout }}"
+  poll: 10
