@@ -21,6 +21,7 @@ from ansible.playbook.play_context import PlayContext
 from tripleo.operator.tests import base as tests_base
 from tripleo.operator.plugins.action import tripleo_undercloud_conf
 
+
 class TestTripleoUndercloudConf(tests_base.TestCase):
 
     def test_run(self):
@@ -28,7 +29,7 @@ class TestTripleoUndercloudConf(tests_base.TestCase):
         mock_task.async_val = None
         mock_task.action = "tripleo_undercloud_conf"
         mock_task.args = dict(path='foo.conf',
-                              values={'DEFAULT': { 'undercloud_debug': True }},
+                              values={'DEFAULT': {'undercloud_debug': True}},
                               sample_path='bar.conf',
                               use_sample=True)
         mock_connection = mock.MagicMock()
@@ -79,7 +80,7 @@ class TestTripleoUndercloudConf(tests_base.TestCase):
         mock_task.async_val = None
         mock_task.action = "tripleo_undercloud_conf"
         mock_task.args = dict(path='foo.conf',
-                              values={'DEFAULT': { 'undercloud_debug': True }},
+                              values={'DEFAULT': {'undercloud_debug': True}},
                               sample_path='bar.conf',
                               use_sample=True)
         mock_connection = mock.MagicMock()
@@ -125,13 +126,12 @@ class TestTripleoUndercloudConf(tests_base.TestCase):
         expected_result = {'dest': 'foo.conf', 'changed': False}
         self.assertEqual(expected_result, result)
 
-
     def test_run_missing_target_no_sample(self):
         mock_task = mock.MagicMock()
         mock_task.async_val = None
         mock_task.action = "tripleo_undercloud_conf"
         mock_task.args = dict(path='foo.conf',
-                              values={'DEFAULT': { 'undercloud_debug': True }},
+                              values={'DEFAULT': {'undercloud_debug': True}},
                               sample_path='bar.conf',
                               use_sample=False)
         mock_connection = mock.MagicMock()
@@ -155,7 +155,7 @@ class TestTripleoUndercloudConf(tests_base.TestCase):
         mock_task.async_val = None
         mock_task.action = "tripleo_undercloud_conf"
         mock_task.args = dict(path='foo.conf',
-                              values={'DEFAULT': { 'undercloud_debug': True }},
+                              values={'DEFAULT': {'undercloud_debug': True}},
                               sample_path='bar.conf',
                               use_sample=True)
         mock_connection = mock.MagicMock()
