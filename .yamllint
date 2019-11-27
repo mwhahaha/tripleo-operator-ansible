@@ -3,8 +3,9 @@ extends: default
 
 rules:
   line-length:
-    # matches hardcoded 160 value from ansible-lint
-    max: 160
+    # increase line limit because ansible collections needs more space
+    # ansible-lint is 160 (rule 204)
+    max: 256
 
 ignore: |
   zuul.d/*.yaml
