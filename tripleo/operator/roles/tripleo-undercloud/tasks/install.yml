@@ -12,7 +12,7 @@
 
 - name: Preserve existing log file if exists
   timestamp_file:
-    path: "{{ _log_location }}"
+    path: "{{ tripleo_undercloud_install_log }}"
 
 - name: Show the underclound install command
   debug:

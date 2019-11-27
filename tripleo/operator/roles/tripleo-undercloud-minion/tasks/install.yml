@@ -1,18 +1,17 @@
 ---
 - name: Setup undercloud minion install facts
   set_fact:
-    _log_location: "{{ tripleo_undercloud_home_dir }}/undercloud_minion_install.log"
     _install_cmd: >-
       openstack undercloud minion install
-      {{ "--force-stack-update" | shell_arg_enabled(enabled=tripleo_undercloud_minion_install_force_stack_update) }}
-      {{ "--no-validations" | shell_arg_enabled(enabled=tripleo_undercloud_minion_install_no_validations) }}
-      {{ "--dry-run" | shell_arg_enabled(enabled=tripleo_undercloud_minion_install_dry_run) }}
-      {{ "--yes" | shell_arg_enabled(enabled=tripleo_undercloud_minion_install_yes) }}
-      {{ _log_location | shell_logging_path(combine=tripleo_undercloud_minion_log_combine, enabled=tripleo_undercloud_minion_log_output) }}
+      {{ "--force-stack-update" | tripleo.operator.shell_arg_enabled(enabled=tripleo_undercloud_minion_install_force_stack_update) }}
+      {{ "--no-validations" | tripleo.operator.shell_arg_enabled(enabled=tripleo_undercloud_minion_install_no_validations) }}
+      {{ "--dry-run" | tripleo.operator.shell_arg_enabled(enabled=tripleo_undercloud_minion_install_dry_run) }}
+      {{ "--yes" | tripleo.operator.shell_arg_enabled(enabled=tripleo_undercloud_minion_install_yes) }}
+      {{ openstack_undercloud_minion_install_log | tripleo.operator.shell_logging_path(combine=tripleo_undercloud_minion_log_combine, enabled=tripleo_undercloud_minion_log_output) }}
 
 - name: Preserve existing log file if exists
   timestamp_file:
-    path: "{{ _log_location }}"
+    path: "{{ openstack_undercloud_minion_install_log }}"
 
 - name: Show the underclound minion install command
   debug:

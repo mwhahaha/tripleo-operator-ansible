@@ -12,3 +12,5 @@ tripleo_undercloud_minion_upgrade_dry_run: false
 tripleo_undercloud_minion_upgrade_force_stack_update: false
 tripleo_undercloud_minion_upgrade_no_validations: false
 tripleo_undercloud_minion_upgrade_yes: false
+tripleo_undercloud_minion_install_log: "{{ tripleo_undercloud_minion_home_dir }}/undercloud_minion_install.log"
+tripleo_undercloud_minion_upgrade_log: "{{ tripleo_undercloud_minion_home_dir }}/undercloud_minion_upgrade.log"
